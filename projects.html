@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - TaskMaster</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="projects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="container">
+                <h1><i class="fas fa-tasks"></i> TaskMaster</h1>
+                <nav>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="projects.html" class="active"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                        <li><a href="calendar.html"><i class="far fa-calendar-alt"></i> Calendar</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Open menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="container">
+            <section class="projects-section">
+                <div class="page-header">
+                    <h2><i class="fas fa-project-diagram"></i> My Projects</h2>
+                    <button id="add-project-btn" class="btn-primary">
+                        <i class="fas fa-plus"></i> New Project
+                    </button>
+                </div>
+
+                <div class="projects-grid" id="projects-grid-container">
+                    <!-- Example Project Card 1 -->
+                    <div class="project-card high-priority">
+                        <div class="project-card-header">
+                            <h3 class="project-card-title">Website Redesign</h3>
+                            <span class="project-status in-progress">In Progress</span>
+                        </div>
+                        <p class="project-card-description">Complete overhaul of the company website with new branding and features.</p>
+                        <div class="project-card-dates">
+                            <span>Start: Jan 15, 2024</span>
+                            <span>End: Apr 30, 2024</span>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 65%;"></div>
+                            </div>
+                            <span class="progress-text">65% Complete</span>
+                        </div>
+                        <div class="project-card-footer">
+                            <span class="project-team">Team: Alpha</span>
+                            <div class="project-actions">
+                                <button class="btn-icon" aria-label="View Tasks"><i class="fas fa-eye"></i></button>
+                                <button class="btn-icon" aria-label="Edit Project"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon btn-icon-danger" aria-label="Delete Project"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Example Project Card 2 -->
+                    <div class="project-card medium-priority">
+                        <div class="project-card-header">
+                            <h3 class="project-card-title">Mobile App Development</h3>
+                             <span class="project-status pending">Pending</span>
+                        </div>
+                        <p class="project-card-description">Develop a new cross-platform mobile application for task management.</p>
+                        <div class="project-card-dates">
+                            <span>Start: Mar 01, 2024</span>
+                            <span>End: Sep 30, 2024</span>
+                        </div>
+                        <div class="project-progress">
+                             <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 10%;"></div>
+                            </div>
+                            <span class="progress-text">10% Complete</span>
+                        </div>
+                        <div class="project-card-footer">
+                            <span class="project-team">Team: Bravo</span>
+                            <div class="project-actions">
+                                <button class="btn-icon" aria-label="View Tasks"><i class="fas fa-eye"></i></button>
+                                <button class="btn-icon" aria-label="Edit Project"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon btn-icon-danger" aria-label="Delete Project"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Example Project Card 3 -->
+                    <div class="project-card low-priority">
+                        <div class="project-card-header">
+                            <h3 class="project-card-title">Marketing Campaign Q2</h3>
+                            <span class="project-status completed">Completed</span>
+                        </div>
+                        <p class="project-card-description">Plan and execute the marketing campaign for the second quarter.</p>
+                        <div class="project-card-dates">
+                            <span>Start: Feb 01, 2024</span>
+                            <span>End: Mar 31, 2024</span>
+                        </div>
+                        <div class="project-progress">
+                             <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 100%;"></div>
+                            </div>
+                            <span class="progress-text">100% Complete</span>
+                        </div>
+                        <div class="project-card-footer">
+                            <span class="project-team">Team: Charlie</span>
+                            <div class="project-actions">
+                                <button class="btn-icon" aria-label="View Tasks"><i class="fas fa-eye"></i></button>
+                                <button class="btn-icon" aria-label="Edit Project"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon btn-icon-danger" aria-label="Delete Project"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Project Modal -->
+        <div id="project-modal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="project-modal-title">New Project</h3>
+                    <button class="close-modal" id="close-project-modal">&times;</button>
+                </div>
+                <form id="project-modal-form">
+                    <input type="hidden" id="project-modal-id"> <!-- For editing -->
+                    <div class="form-group">
+                        <label for="project-modal-name">Project Name</label>
+                        <input type="text" id="project-modal-name" placeholder="Enter project name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="project-modal-description">Description</label>
+                        <textarea id="project-modal-description" placeholder="Enter project description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="project-modal-start-date">Start Date</label>
+                        <input type="date" id="project-modal-start-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="project-modal-end-date">End Date</label>
+                        <input type="date" id="project-modal-end-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="project-modal-priority">Priority</label>
+                        <select id="project-modal-priority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                     <div class="form-group">
+                        <label for="project-modal-status">Status</label>
+                        <select id="project-modal-status">
+                            <option value="pending">Pending</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="on-hold">On Hold</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Save Project</button>
+                </form>
+            </div>
+        </div>
+    </div><!-- Closing app-container -->
+    <footer>
+            <div class="container">
+                <p>&copy; 2024 TaskMaster. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script> 
+    <script src="projects.js"></script>
+</body>
+</html>

@@ -12,414 +12,414 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><i class="fas fa-tasks"></i> TaskMaster</h1>
-            <nav>
-                <ul>
-                    <li><a href="#dashboard" class="active">Dashboard</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#calendar">Calendar</a></li>
-                    <li><a href="#settings">Settings</a></li>
-                </ul>
-                <button class="mobile-menu-btn" aria-label="Toggle menu">
+    <div class="app-container">
+        <header>
+            <div class="container">
+                <h1><i class="fas fa-tasks"></i> TaskMaster</h1>
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="projects.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                        <li><a href="calendar.html"><i class="far fa-calendar-alt"></i> Calendar</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Open menu">
                     <i class="fas fa-bars"></i>
                 </button>
-            </nav>
-        </div>
-    </header>
-
-    <main class="container">
-        <!-- Dashboard Section -->
-        <section id="dashboard" class="content-section active-section">
-            <div class="dashboard-grid">
-                <section class="task-creation">
-                    <h2>Create New Task</h2>
-                    <form id="task-form">
-                        <div class="form-group">
-                            <label for="task-title">Task Title</label>
-                            <input type="text" id="task-title" placeholder="Enter task title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="task-description">Description</label>
-                            <textarea id="task-description" placeholder="Enter task description"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="task-due-date">Due Date</label>
-                            <input type="date" id="task-due-date">
-                        </div>
-                        <div class="form-group">
-                            <label for="task-priority">Priority</label>
-                            <select id="task-priority">
-                                <option value="low">Low</option>
-                                <option value="medium" selected>Medium</option>
-                                <option value="high">High</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="task-category">Category</label>
-                            <select id="task-category">
-                                <option value="work">Work</option>
-                                <option value="personal">Personal</option>
-                                <option value="shopping">Shopping</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="task-project">Project</label>
-                            <select id="task-project">
-                                <option value="">No Project</option>
-                                <!-- Projects will be dynamically inserted here -->
-                            </select>
-                        </div>
-                        <button type="submit" class="btn-primary">Add Task</button>
-                    </form>
-                </section>
-
-                <section class="stats-overview">
-                    <h2>Overview</h2>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value" id="total-tasks">0</div>
-                            <div class="stat-label">Total Tasks</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="completed-tasks">0</div>
-                            <div class="stat-label">Completed</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="pending-tasks">0</div>
-                            <div class="stat-label">Pending</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="overdue-tasks">0</div>
-                            <div class="stat-label">Overdue</div>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="tasks-chart"></canvas>
-                    </div>
-                </section>
-
-                <section class="task-filters">
-                    <h2>Filter Tasks</h2>
-                    <div class="filter-options">
-                        <div class="filter-group">
-                            <label for="filter-priority">Priority</label>
-                            <select id="filter-priority">
-                                <option value="all">All</option>
-                                <option value="high">High</option>
-                                <option value="medium">Medium</option>
-                                <option value="low">Low</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="filter-status">Status</label>
-                            <select id="filter-status">
-                                <option value="all">All</option>
-                                <option value="pending">Pending</option>
-                                <option value="in-progress">In Progress</option>
-                                <option value="completed">Completed</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="filter-category">Category</label>
-                            <select id="filter-category">
-                                <option value="all">All</option>
-                                <option value="work">Work</option>
-                                <option value="personal">Personal</option>
-                                <option value="shopping">Shopping</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="filter-project">Project</label>
-                            <select id="filter-project">
-                                <option value="all">All</option>
-                                <!-- Projects will be dynamically inserted here -->
-                            </select>
-                        </div>
-                        <button id="apply-filters" class="btn-secondary">Apply Filters</button>
-                        <button id="clear-filters" class="btn-outline">Clear Filters</button>
-                    </div>
-                </section>
-
-                <section class="task-list">
-                    <h2>Your Tasks</h2>
-                    <div class="task-list-header">
-                        <span class="task-count">0 tasks</span>
-                        <div class="view-options">
-                            <button class="view-option active" data-view="list" aria-label="List view">
-                                <i class="fas fa-list"></i>
-                            </button>
-                            <button class="view-option" data-view="grid" aria-label="Grid view">
-                                <i class="fas fa-th-large"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="tasks-container list-view">
-                        <!-- Tasks will be dynamically inserted here -->
-                    </div>
-                </section>
             </div>
-        </section>
+        </header>
 
-        <!-- Projects Section -->
-        <section id="projects" class="content-section">
-            <div class="projects-grid">
-                <section class="project-creation">
-                    <h2>Create New Project</h2>
-                    <form id="project-form">
-                        <div class="form-group">
-                            <label for="project-name">Project Name</label>
-                            <input type="text" id="project-name" placeholder="Enter project name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="project-description">Description</label>
-                            <textarea id="project-description" placeholder="Enter project description"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="project-start-date">Start Date</label>
-                            <input type="date" id="project-start-date">
-                        </div>
-                        <div class="form-group">
-                            <label for="project-end-date">End Date</label>
-                            <input type="date" id="project-end-date">
-                        </div>
-                        <div class="form-group">
-                            <label for="project-color">Color</label>
-                            <input type="color" id="project-color" value="#4a6fa5">
-                        </div>
-                        <button type="submit" class="btn-primary">Create Project</button>
-                    </form>
-                </section>
-
-                <section class="project-list">
-                    <h2>Your Projects</h2>
-                    <div class="projects-container">
-                        <!-- Projects will be dynamically inserted here -->
-                    </div>
-                </section>
-
-                <section class="project-details" id="project-details-section" style="display: none;">
-                    <div class="project-details-header">
-                        <h2 id="project-details-title">Project Details</h2>
-                        <button id="close-project-details" class="btn-outline">Back to Projects</button>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-color" id="project-details-color"></div>
-                        <div class="project-meta">
-                            <div class="project-dates" id="project-details-dates"></div>
-                            <div class="project-stats">
-                                <span id="project-tasks-count">0 tasks</span>
-                                <span id="project-completion">0% complete</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="project-description" id="project-details-description"></p>
-                    
-                    <h3>Project Tasks</h3>
-                    <div class="project-tasks-list">
-                        <!-- Project tasks will be dynamically inserted here -->
-                    </div>
-                </section>
-            </div>
-        </section>
-
-        <!-- Calendar Section -->
-        <section id="calendar" class="content-section">
-            <div class="calendar-header">
-                <h2>Calendar</h2>
-                <div class="calendar-controls">
-                    <button id="prev-month" class="btn-outline">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <h3 id="current-month">Month Year</h3>
-                    <button id="next-month" class="btn-outline">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    <button id="today-btn" class="btn-secondary">Today</button>
-                </div>
-            </div>
-            
-            <div class="calendar-view-options">
-                <button class="view-option active" data-view="month">Month</button>
-                <button class="view-option" data-view="week">Week</button>
-                <button class="view-option" data-view="day">Day</button>
-            </div>
-            
-            <div class="calendar-container">
-                <div class="calendar-month-view">
-                    <div class="calendar-weekdays">
-                        <div>Sun</div>
-                        <div>Mon</div>
-                        <div>Tue</div>
-                        <div>Wed</div>
-                        <div>Thu</div>
-                        <div>Fri</div>
-                        <div>Sat</div>
-                    </div>
-                    <div class="calendar-days" id="calendar-days">
-                        <!-- Calendar days will be dynamically inserted here -->
-                    </div>
-                </div>
-                
-                <div class="calendar-week-view" style="display: none;">
-                    <div class="week-header">
-                        <div class="week-dates" id="week-dates">
-                            <!-- Week dates will be dynamically inserted here -->
-                        </div>
-                    </div>
-                    <div class="week-time-slots">
-                        <div class="time-column">
-                            <!-- Time slots will be dynamically inserted here -->
-                        </div>
-                        <div class="week-columns" id="week-columns">
-                            <!-- Week columns will be dynamically inserted here -->
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="calendar-day-view" style="display: none;">
-                    <div class="day-header">
-                        <h3 id="day-view-date">Day, Month Date</h3>
-                    </div>
-                    <div class="day-time-slots">
-                        <div class="time-column">
-                            <!-- Time slots will be dynamically inserted here -->
-                        </div>
-                        <div class="day-events" id="day-events">
-                            <!-- Day events will be dynamically inserted here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="calendar-event-modal" id="event-modal" style="display: none;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 id="modal-title">Event Details</h3>
-                        <button class="close-modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="event-details">
-                            <!-- Event details will be dynamically inserted here -->
-                        </div>
-                        <form id="event-form" style="display: none;">
-                            <input type="hidden" id="event-id">
+        <main class="container">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active-section">
+                <div class="dashboard-grid">
+                    <section class="task-creation">
+                        <h2>Create New Task</h2>
+                        <form id="task-form">
                             <div class="form-group">
-                                <label for="event-title">Title</label>
-                                <input type="text" id="event-title" required>
+                                <label for="task-title">Task Title</label>
+                                <input type="text" id="task-title" placeholder="Enter task title" required>
                             </div>
                             <div class="form-group">
-                                <label for="event-date">Date</label>
-                                <input type="date" id="event-date" required>
+                                <label for="task-description">Description</label>
+                                <textarea id="task-description" placeholder="Enter task description"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="event-start-time">Start Time</label>
-                                <input type="time" id="event-start-time" required>
+                                <label for="task-due-date">Due Date</label>
+                                <input type="date" id="task-due-date">
                             </div>
                             <div class="form-group">
-                                <label for="event-end-time">End Time</label>
-                                <input type="time" id="event-end-time" required>
+                                <label for="task-priority">Priority</label>
+                                <select id="task-priority">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="event-description">Description</label>
-                                <textarea id="event-description"></textarea>
+                                <label for="task-category">Category</label>
+                                <select id="task-category">
+                                    <option value="work">Work</option>
+                                    <option value="personal">Personal</option>
+                                    <option value="shopping">Shopping</option>
+                                    <option value="other">Other</option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="event-color">Color</label>
-                                <input type="color" id="event-color" value="#4a6fa5">
+                                <label for="task-project">Project</label>
+                                <select id="task-project">
+                                    <option value="">No Project</option>
+                                    <!-- Projects will be dynamically inserted here -->
+                                </select>
                             </div>
-                            <div class="form-actions">
-                                <button type="button" class="btn-outline" id="cancel-event">Cancel</button>
-                                <button type="submit" class="btn-primary">Save</button>
-                                <button type="button" class="btn-danger" id="delete-event" style="display: none;">Delete</button>
-                            </div>
+                            <button type="submit" class="btn-primary">Add Task</button>
                         </form>
+                    </section>
+
+                    <section class="stats-overview">
+                        <h2>Overview</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="total-tasks">0</div>
+                                <div class="stat-label">Total Tasks</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="completed-tasks">0</div>
+                                <div class="stat-label">Completed</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="pending-tasks">0</div>
+                                <div class="stat-label">Pending</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="overdue-tasks">0</div>
+                                <div class="stat-label">Overdue</div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="tasks-chart"></canvas>
+                        </div>
+                    </section>
+
+                    <section class="task-filters">
+                        <h2>Filter Tasks</h2>
+                        <div class="filter-options">
+                            <div class="filter-group">
+                                <label for="filter-priority">Priority</label>
+                                <select id="filter-priority">
+                                    <option value="all">All</option>
+                                    <option value="high">High</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="filter-status">Status</label>
+                                <select id="filter-status">
+                                    <option value="all">All</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="filter-category">Category</label>
+                                <select id="filter-category">
+                                    <option value="all">All</option>
+                                    <option value="work">Work</option>
+                                    <option value="personal">Personal</option>
+                                    <option value="shopping">Shopping</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="filter-project">Project</label>
+                                <select id="filter-project">
+                                    <option value="all">All</option>
+                                    <!-- Projects will be dynamically inserted here -->
+                                </select>
+                            </div>
+                            <button id="apply-filters" class="btn-secondary">Apply Filters</button>
+                            <button id="clear-filters" class="btn-outline">Clear Filters</button>
+                        </div>
+                    </section>
+
+                    <section class="task-list">
+                        <h2>Your Tasks</h2>
+                        <div class="task-list-header">
+                            <span class="task-count">0 tasks</span>
+                            <div class="view-options">
+                                <button class="view-option active" data-view="list" aria-label="List view">
+                                    <i class="fas fa-list"></i>
+                                </button>
+                                <button class="view-option" data-view="grid" aria-label="Grid view">
+                                    <i class="fas fa-th-large"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="tasks-container list-view">
+                            <!-- Tasks will be dynamically inserted here -->
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="content-section">
+                <div class="projects-grid">
+                    <section class="project-creation">
+                        <h2>Create New Project</h2>
+                        <form id="project-form">
+                            <div class="form-group">
+                                <label for="project-name">Project Name</label>
+                                <input type="text" id="project-name" placeholder="Enter project name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="project-description">Description</label>
+                                <textarea id="project-description" placeholder="Enter project description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="project-start-date">Start Date</label>
+                                <input type="date" id="project-start-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="project-end-date">End Date</label>
+                                <input type="date" id="project-end-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="project-color">Color</label>
+                                <input type="color" id="project-color" value="#4a6fa5">
+                            </div>
+                            <button type="submit" class="btn-primary">Create Project</button>
+                        </form>
+                    </section>
+
+                    <section class="project-list">
+                        <h2>Your Projects</h2>
+                        <div class="projects-container">
+                            <!-- Projects will be dynamically inserted here -->
+                        </div>
+                    </section>
+
+                    <section class="project-details" id="project-details-section" style="display: none;">
+                        <div class="project-details-header">
+                            <h2 id="project-details-title">Project Details</h2>
+                            <button id="close-project-details" class="btn-outline">Back to Projects</button>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-color" id="project-details-color"></div>
+                            <div class="project-meta">
+                                <div class="project-dates" id="project-details-dates"></div>
+                                <div class="project-stats">
+                                    <span id="project-tasks-count">0 tasks</span>
+                                    <span id="project-completion">0% complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="project-description" id="project-details-description"></p>
+                        
+                        <h3>Project Tasks</h3>
+                        <div class="project-tasks-list">
+                            <!-- Project tasks will be dynamically inserted here -->
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Calendar Section -->
+            <section id="calendar" class="content-section">
+                <div class="calendar-header">
+                    <h2>Calendar</h2>
+                    <div class="calendar-controls">
+                        <button id="prev-month" class="btn-outline">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="current-month">Month Year</h3>
+                        <button id="next-month" class="btn-outline">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <button id="today-btn" class="btn-secondary">Today</button>
                     </div>
                 </div>
+                
+                <div class="calendar-view-options">
+                    <button class="view-option active" data-view="month">Month</button>
+                    <button class="view-option" data-view="week">Week</button>
+                    <button class="view-option" data-view="day">Day</button>
+                </div>
+                
+                <div class="calendar-container">
+                    <div class="calendar-month-view">
+                        <div class="calendar-weekdays">
+                            <div>Sun</div>
+                            <div>Mon</div>
+                            <div>Tue</div>
+                            <div>Wed</div>
+                            <div>Thu</div>
+                            <div>Fri</div>
+                            <div>Sat</div>
+                        </div>
+                        <div class="calendar-days" id="calendar-days">
+                            <!-- Calendar days will be dynamically inserted here -->
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-week-view" style="display: none;">
+                        <div class="week-header">
+                            <div class="week-dates" id="week-dates">
+                                <!-- Week dates will be dynamically inserted here -->
+                            </div>
+                        </div>
+                        <div class="week-time-slots">
+                            <div class="time-column">
+                                <!-- Time slots will be dynamically inserted here -->
+                            </div>
+                            <div class="week-columns" id="week-columns">
+                                <!-- Week columns will be dynamically inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-day-view" style="display: none;">
+                        <div class="day-header">
+                            <h3 id="day-view-date">Day, Month Date</h3>
+                        </div>
+                        <div class="day-time-slots">
+                            <div class="time-column">
+                                <!-- Time slots will be dynamically inserted here -->
+                            </div>
+                            <div class="day-events" id="day-events">
+                                <!-- Day events will be dynamically inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="calendar-event-modal" id="event-modal" style="display: none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="modal-title">Event Details</h3>
+                            <button class="close-modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="event-details">
+                                <!-- Event details will be dynamically inserted here -->
+                            </div>
+                            <form id="event-form" style="display: none;">
+                                <input type="hidden" id="event-id">
+                                <div class="form-group">
+                                    <label for="event-title">Title</label>
+                                    <input type="text" id="event-title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-date">Date</label>
+                                    <input type="date" id="event-date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-start-time">Start Time</label>
+                                    <input type="time" id="event-start-time" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-end-time">End Time</label>
+                                    <input type="time" id="event-end-time" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-description">Description</label>
+                                    <textarea id="event-description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-color">Color</label>
+                                    <input type="color" id="event-color" value="#4a6fa5">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn-outline" id="cancel-event">Cancel</button>
+                                    <button type="submit" class="btn-primary">Save</button>
+                                    <button type="button" class="btn-danger" id="delete-event" style="display: none;">Delete</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="content-section">
+                <h2>Settings</h2>
+                <div class="settings-grid">
+                    <section class="user-settings">
+                        <h3>User Preferences</h3>
+                        <form id="user-settings-form">
+                            <div class="form-group">
+                                <label for="theme-preference">Theme</label>
+                                <select id="theme-preference">
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="system">System Default</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="default-view">Default Task View</label>
+                                <select id="default-view">
+                                    <option value="list">List</option>
+                                    <option value="grid">Grid</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="week-start-day">Week Starts On</label>
+                                <select id="week-start-day">
+                                    <option value="0">Sunday</option>
+                                    <option value="1" selected>Monday</option>
+                                    <option value="6">Saturday</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="time-format">Time Format</label>
+                                <select id="time-format">
+                                    <option value="12">12-hour</option>
+                                    <option value="24">24-hour</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-primary">Save Preferences</button>
+                        </form>
+                    </section>
+
+                    <section class="notification-settings">
+                        <h3>Notifications</h3>
+                        <form id="notification-settings-form">
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="task-reminders" checked>
+                                <label for="task-reminders">Task Reminders</label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="due-date-notifications" checked>
+                                <label for="due-date-notifications">Due Date Notifications</label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="weekly-summary" checked>
+                                <label for="weekly-summary">Weekly Summary</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="notification-time">Daily Notification Time</label>
+                                <input type="time" id="notification-time" value="09:00">
+                            </div>
+                            <button type="submit" class="btn-primary">Save Notification Settings</button>
+                        </form>
+                    </section>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2023 TaskMaster. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact Us</a>
+                </div>
             </div>
-        </section>
+        </footer>
 
-        <!-- Settings Section -->
-        <section id="settings" class="content-section">
-            <h2>Settings</h2>
-            <div class="settings-grid">
-                <section class="user-settings">
-                    <h3>User Preferences</h3>
-                    <form id="user-settings-form">
-                        <div class="form-group">
-                            <label for="theme-preference">Theme</label>
-                            <select id="theme-preference">
-                                <option value="light">Light</option>
-                                <option value="dark">Dark</option>
-                                <option value="system">System Default</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="default-view">Default Task View</label>
-                            <select id="default-view">
-                                <option value="list">List</option>
-                                <option value="grid">Grid</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="week-start-day">Week Starts On</label>
-                            <select id="week-start-day">
-                                <option value="0">Sunday</option>
-                                <option value="1" selected>Monday</option>
-                                <option value="6">Saturday</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="time-format">Time Format</label>
-                            <select id="time-format">
-                                <option value="12">12-hour</option>
-                                <option value="24">24-hour</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn-primary">Save Preferences</button>
-                    </form>
-                </section>
-
-                <section class="notification-settings">
-                    <h3>Notifications</h3>
-                    <form id="notification-settings-form">
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="task-reminders" checked>
-                            <label for="task-reminders">Task Reminders</label>
-                        </div>
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="due-date-notifications" checked>
-                            <label for="due-date-notifications">Due Date Notifications</label>
-                        </div>
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="weekly-summary" checked>
-                            <label for="weekly-summary">Weekly Summary</label>
-                        </div>
-                        <div class="form-group">
-                            <label for="notification-time">Daily Notification Time</label>
-                            <input type="time" id="notification-time" value="09:00">
-                        </div>
-                        <button type="submit" class="btn-primary">Save Notification Settings</button>
-                    </form>
-                </section>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 TaskMaster. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Contact Us</a>
-            </div>
-        </div>
-    </footer>
-
-    <script src="./script.js"></script>
-</body>
+        <script src="./script.js"></script>
+    </body>
 </html>

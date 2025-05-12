@@ -1,0 +1,196 @@
+/* Calendar Page Specific Styles */
+.calendar-page-main {
+    display: flex;
+    gap: 20px;
+    padding-top: 20px; /* Add some space from the header */
+}
+
+.calendar-view-container {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.calendar-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    flex-grow: 1; /* Allow grid to take available space */
+}
+
+.calendar-day-header,
+.calendar-day {
+    background-color: var(--light-color);
+    padding: 10px;
+    text-align: center;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    min-height: 80px; /* Give days some height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align day number to top */
+}
+
+.calendar-day-header {
+    font-weight: bold;
+    background-color: #e9ecef;
+    min-height: auto; /* Headers don't need as much height */
+    padding: 8px;
+}
+
+.calendar-day .day-number {
+    font-weight: 500;
+}
+
+.calendar-day.other-month .day-number {
+    color: #aaa;
+}
+
+.calendar-day.today .day-number {
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    display: inline-block;
+}
+
+.calendar-day.highlighted-project-date {
+    background-color: rgba(74, 111, 165, 0.2); /* Light primary color */
+    border: 1px solid var(--primary-color);
+}
+.calendar-day.highlighted-project-date.is-start-date {
+    background-color: rgba(var(--primary-color-rgb), 0.4); /* Darker for start */
+}
+.calendar-day.highlighted-project-date.is-end-date {
+    background-color: rgba(var(--primary-color-rgb), 0.4); /* Darker for end */
+}
+
+
+.calendar-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    max-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Styles for the project list in the calendar sidebar */
+.calendar-sidebar .project-list-scrollable {
+    max-height: 300px; /* Adjust as needed */
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.calendar-sidebar .project-item {
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border: 1px solid #eee;
+    font-size: 0.9rem;
+}
+
+.calendar-sidebar .project-item:hover {
+    background-color: #f0f0f0;
+}
+
+.calendar-sidebar .project-item.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Styles for calendar day cells when a project is selected */
+.calendar-grid .day.project-date-range {
+    background-color: rgba(173, 216, 230, 0.5); /* Light blue with 50% opacity */
+    font-weight: bold;
+}
+
+.calendar-grid .day.project-due-date {
+    position: relative;
+}
+
+/* Simple dot marker for due dates */
+.calendar-grid .day.project-due-date::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--danger-color); /* Or project-specific color */
+}
+
+/* If a day is both in range and a due date, ensure due date marker is visible */
+.calendar-grid .day.project-date-range.project-due-date {
+    background-color: rgba(173, 216, 230, 0.7); /* Slightly darker light blue for overlap */
+}
+
+/* Ensure day numbers are still readable */
+.calendar-grid .day.project-date-range span,
+.calendar-grid .day.project-due-date span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Responsive adjustments for calendar page */
+@media (max-width: 992px) {
+    .calendar-page-main {
+        flex-direction: column;
+    }
+    .calendar-sidebar {
+        width: 100%;
+        max-height: 300px; /* Limit height when stacked */
+    }
+}
+
+@media (max-width: 768px) {
+    .calendar-day {
+        min-height: 60px;
+        font-size: 0.8rem;
+        padding: 5px;
+    }
+    .calendar-day .day-number {
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+    }
+}
